@@ -8,7 +8,7 @@ RUN echo "options(repos = c(CRAN = 'https://ftpmirror1.infania.net/mirror/CRAN')
 RUN R -e "install.packages('remotes')"
 RUN R -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
 
-WORKDIR /home/rstudio/work
+WORKDIR /home/rstudio
 COPY renv.lock .
 RUN R -e 'renv::activate()'
 RUN R -e 'renv::restore()'
