@@ -83,5 +83,5 @@ class TestCookieSetup(object):
         )
 
         assert len(abs_files[0]) == 2
-        assert abs_files[0][0] == ".gitkeep"
-        assert abs_files[0][1] == "make_dataset.R"
+        assert ".gitkeep" in abs_files[0]
+        assert "make_dataset.R" in abs_files[0]
