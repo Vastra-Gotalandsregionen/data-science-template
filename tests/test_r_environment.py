@@ -32,7 +32,8 @@ class TestCookieSetup(object):
 
         assert "r_project_name" in lines
         assert (
-            "Visit localhost:8787 in your browser and log in with username ```rstudio``` and the password you set when starting the container."
+            "Visit [localhost:8787](http://localhost:8787) in your browser and log in with username ```rstudio``` and" +
+            " the password you set when starting the container. Use the terminal in RStudio to run things like ```git``` and ```dvc```."
             in lines
         )
 
