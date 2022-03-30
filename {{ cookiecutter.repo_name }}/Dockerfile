@@ -20,8 +20,7 @@ RUN apt install python-is-python3 -y
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-{% endif %}
-{% if cookiecutter.python_interpreter == 'python3' %}FROM nvidia/cuda:11.4.0-base-ubuntu20.04
+{% endif %}{% if cookiecutter.python_interpreter == 'python3' %}FROM nvidia/cuda:11.4.0-base-ubuntu20.04
 
 ENV KUBECONFIG="/tmp/kube.config"
 
