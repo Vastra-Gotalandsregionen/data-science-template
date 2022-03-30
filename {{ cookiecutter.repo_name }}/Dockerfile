@@ -13,11 +13,18 @@ COPY renv.lock .
 RUN R -e 'renv::activate()'
 RUN R -e 'renv::restore()'
 
-{% else %}# Ubuntu with python, git and text-editors installed
-FROM nvidia/cuda:11.4.0-base-ubuntu20.04
+RUN apt -y update
+RUN apt install python3 python3-pip git nano vim -y
+RUN apt install python-is-python3 -y
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+{% endif %}
+{% if cookiecutter.python_interpreter == 'python3' %}FROM nvidia/cuda:11.4.0-base-ubuntu20.04
 
 RUN apt -y update \
-    && apt install python3 python3-pip git -y \
+    && apt install python3 python3-pip git nano vim -y \
     && apt install python-is-python3 -y \
     && addgroup --gid 999 researcher \
     && adduser --home /workspace --disabled-password --gecos '' --uid 999 --gid 999 researcher
@@ -29,5 +36,4 @@ USER researcher
 WORKDIR /workspace
 
 CMD ["dvc", "repro"]
-
 {% endif %}
