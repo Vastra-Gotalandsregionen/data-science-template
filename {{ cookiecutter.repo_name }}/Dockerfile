@@ -7,7 +7,11 @@ ENV UID=1000
 RUN apt -y update \
     && apt install -y --no-install-recommends python3-pip git openssl \
     && addgroup --gid $GID researcher \
+    {% if cookiecutter.image == 'Tensorflow' %}
+    {% if cookiecutter.image == 'PyTorch' %}
     && adduser --home /workspace --shell /bin/bash --disabled-password --gecos '' --uid $UID --gid $GID researcher
+    {% endif %}
+    {% endif %}
 
 ADD http://aiav2.vgregion.se/VGC%20Root%20CA%20v2.crt /tmp/vgc_root.der
 ADD http://aiav2.vgregion.se/VGC%20Issuing%201%20CA%20v2.crt /tmp/vgc_issuing1.der
