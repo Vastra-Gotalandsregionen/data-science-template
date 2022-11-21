@@ -5,12 +5,9 @@ ENV GID=1000
 ENV UID=1000
 
 RUN apt -y update \
-    && apt install -y --no-install-recommends python3-pip git openssl \
+    && apt install -y --no-install-recommends python3-pip git openssl {% if cookicutter.image != 'R' %}\
     && addgroup --gid $GID researcher \
-    {% if cookiecutter.image == 'Tensorflow' %}
-    {% if cookiecutter.image == 'PyTorch' %}
     && adduser --home /workspace --shell /bin/bash --disabled-password --gecos '' --uid $UID --gid $GID researcher
-    {% endif %}
     {% endif %}
 
 ADD http://aiav2.vgregion.se/VGC%20Root%20CA%20v2.crt /tmp/vgc_root.der
@@ -18,7 +15,7 @@ ADD http://aiav2.vgregion.se/VGC%20Issuing%201%20CA%20v2.crt /tmp/vgc_issuing1.d
 ADD http://aiav2.vgregion.se/VGC%20Issuing%202%20CA%20v2.crt /tmp/vgc_issuing2.der
 ADD http://aiav2.vgregion.se/VGC%20Issuing%201%20CA%20v2(1).crt /tmp/vgc_issuing1_2.der
 
-COPY requirements.txt setup.py ./
+COPY requirements.txt {% if cookicutter.image != 'R' %} setup.py {% endif %} ./
 RUN pip install -r requirements.txt \
     && openssl x509 -inform der -in /tmp/vgc_root.der -out /usr/local/share/ca-certificates/vgc_root.crt \
     && openssl x509 -inform der -in /tmp/vgc_issuing1.der -out /usr/local/share/ca-certificates/vgc_issuing1.crt \
