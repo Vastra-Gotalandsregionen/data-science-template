@@ -94,6 +94,7 @@ class TestCookieSetup(object):
             f"{module_name}/models",
             f"{module_name}/visualization",
             "tests",
+            "inference",
         ]
 
         abs_expected_dirs = [str(self.path / d) for d in expected_dirs]
@@ -111,3 +112,14 @@ class TestCookieSetup(object):
         assert len(abs_files[0]) == 2
         assert ".gitkeep" in abs_files[0]
         assert "make_dataset.R" in abs_files[0]
+
+    def test_inference_files(self):
+        _, _, abs_files = list(zip(*os.walk(f"{self.path}/inference")))
+
+        expected_files = [
+            "Dockerfile",
+            "requirements.txt",
+        ]
+
+        for expected_file in expected_files:
+            assert expected_file in abs_files[0]

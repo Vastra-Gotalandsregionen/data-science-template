@@ -1,0 +1,2 @@
+# torch==2.5.1
+# tensorflow==2.18.0 
